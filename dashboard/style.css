@@ -1,0 +1,349 @@
+
+/* =====================================
+   MULTI-TARGET RADAR TRACKING SYSTEM
+   Complete Dashboard Styling
+===================================== */
+
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #080f1b;
+    color: #ffffff;
+    padding: 20px;
+}
+
+/* Header */
+.header {
+    text-align: center;
+    padding: 25px 10px;
+    margin-bottom: 25px;
+}
+
+.header h1 {
+    color: #35e0ae;
+    font-size: 32px;
+    margin-bottom: 10px;
+}
+
+.header p {
+    color: #a9bacb;
+    font-size: 16px;
+}
+
+/* Main Dashboard */
+.dashboard {
+    max-width: 1200px;
+    margin: auto;
+}
+
+/* Section Headings */
+section h2 {
+    color: #35e0ae;
+    margin-bottom: 20px;
+    font-size: 25px;
+}
+
+/* System Status Cards */
+.status-section {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.status-card {
+    background: #142337;
+    border: 1px solid #263b50;
+    border-radius: 10px;
+    padding: 25px;
+    text-align: center;
+}
+
+.status-card h3 {
+    color: #a9bacb;
+    font-size: 17px;
+    margin-bottom: 12px;
+}
+
+.status-card p {
+    color: #35e0ae;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.status-card .online {
+    color: #35e0ae;
+}
+
+/* Radar Section */
+.radar-section {
+    background: #111c29;
+    border: 1px solid #263b50;
+    border-radius: 10px;
+    padding: 25px;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+#radarCanvas {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    margin: 20px auto;
+    background: #06140f;
+    border: 2px solid #168b65;
+    border-radius: 50%;
+}
+
+/* Radar Controls */
+.radar-controls {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+button {
+    background: #087f5b;
+    color: #ffffff;
+    border: none;
+    padding: 12px 22px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: bold;
+    transition: background 0.2s;
+}
+
+button:hover {
+    background: #0ba878;
+}
+
+/* Target Selection */
+.target-filter {
+    background: #111c29;
+    border: 1px solid #263b50;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 30px;
+}
+
+.target-filter label {
+    display: inline-block;
+    color: #ffffff;
+    margin-right: 8px;
+    font-size: 16px;
+}
+
+.target-filter select {
+    background: #20364c;
+    color: #ffffff;
+    border: 1px solid #35e0ae;
+    border-radius: 5px;
+    padding: 9px;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+#selectedTargetInfo {
+    color: #a9bacb;
+    margin-top: 12px;
+}
+
+/* Target Tracking Table */
+.target-section {
+    background: #111c29;
+    border: 1px solid #263b50;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 30px;
+}
+
+.table-container {
+    width: 100%;
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: center;
+}
+
+thead {
+    background: #20364c;
+}
+
+th {
+    color: #35e0ae;
+    padding: 15px 10px;
+    font-size: 16px;
+}
+
+td {
+    padding: 15px 10px;
+    border-bottom: 1px solid #263b50;
+    color: #ffffff;
+}
+
+tbody tr:hover {
+    background: #172a3c;
+}
+
+/* Target Status */
+td:last-child {
+    color: #35e0ae;
+    font-weight: bold;
+}
+
+/* Target Monitoring Alerts */
+.alert-section {
+    background: #111c29;
+    border: 1px solid #263b50;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 30px;
+}
+
+.alert-section h2 {
+    color: #35e0ae;
+    margin-bottom: 18px;
+}
+
+#alertSummary {
+    background: #1b3042;
+    padding: 12px;
+    border-radius: 6px;
+    margin-bottom: 12px;
+    color: #ffffff;
+}
+
+#alertList {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+#alertList p {
+    color: #cbd5e1;
+}
+
+.alert-item {
+    background: #263747;
+    border-left: 5px solid #f0b429;
+    padding: 12px;
+    border-radius: 5px;
+    color: #ffffff;
+}
+
+.alert-warning {
+    border-left-color: #f0b429;
+}
+
+.alert-danger {
+    border-left-color: #ff5252;
+}
+
+.alert-success {
+    border-left-color: #35e0ae;
+}
+
+/* Target Position Prediction */
+.prediction-section {
+    background: #111c29;
+    border: 1px solid #263b50;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 30px;
+}
+
+.prediction-section label {
+    display: block;
+    color: #ffffff;
+    margin-bottom: 10px;
+}
+
+.prediction-section input {
+    background: #20364c;
+    color: #ffffff;
+    border: 1px solid #35e0ae;
+    border-radius: 5px;
+    padding: 10px;
+    width: 150px;
+    font-size: 16px;
+    margin-bottom: 15px;
+}
+
+#predictionResults {
+    margin-top: 15px;
+    color: #cbd5e1;
+}
+
+#predictionResults p {
+    background: #1b3042;
+    padding: 12px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 25px 10px;
+    margin-top: 20px;
+    color: #8295a8;
+    font-size: 14px;
+    line-height: 1.8;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+
+    body {
+        padding: 10px;
+    }
+
+    .header h1 {
+        font-size: 24px;
+    }
+
+    .status-section {
+        grid-template-columns: 1fr;
+    }
+
+    section h2 {
+        font-size: 21px;
+    }
+
+    .radar-section,
+    .target-section,
+    .alert-section,
+    .prediction-section,
+    .target-filter {
+        padding: 15px;
+    }
+
+    th,
+    td {
+        padding: 10px 8px;
+        font-size: 13px;
+    }
+
+    .radar-controls button {
+        width: 100%;
+    }
+}
+#noiseComparisonChart {
+    display: block;
+    width: 100%;
+    max-width: 900px;
+    height: auto;
+    box-sizing: border-box;
+}

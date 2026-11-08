@@ -1,0 +1,296 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Multi-Target Radar Tracking System</title>
+
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+</head>
+
+<body>
+
+    <header class="header">
+        <h1>Multi-Target Radar Tracking System</h1>
+        <p>Real-Time Target Monitoring and Tracking Dashboard</p>
+    </header>
+
+    <main class="container">
+
+        <!-- TARGET SUMMARY -->
+        <section class="summary-container">
+
+            <div class="summary-card">
+                <h3>Total Targets</h3>
+                <h2 id="totalTargets">3</h2>
+            </div>
+
+            <div class="summary-card">
+                <h3>Active Targets</h3>
+                <h2 id="activeTargets">3</h2>
+            </div>
+
+        </section>
+
+        <!-- RADAR MONITORING -->
+        <section class="radar-section">
+
+            <h2>Radar Monitoring Display</h2>
+
+            <div class="radar-container">
+                <canvas id="radarCanvas"
+                        width="600"
+                        height="600">
+                </canvas>
+            </div>
+
+            <div class="radar-controls">
+                <button onclick="startRadar()">Start Radar</button>
+                <button onclick="stopRadar()">Stop Radar</button>
+                <button onclick="resetRadar()">Reset Radar</button>
+            </div>
+
+        </section>
+
+        <!-- TARGET FILTER -->
+        <section class="filter-section">
+
+            <h2>Target Selection</h2>
+
+            <label for="targetFilter">Select Target:</label>
+
+            <select id="targetFilter" onchange="filterTargets()">
+                <option value="all">Show All Targets</option>
+            </select>
+
+            <p id="selectedTargetInfo">
+                Showing all available targets.
+            </p>
+
+        </section>
+
+        <!-- TARGET TRACKING INFORMATION -->
+        <section class="table-section">
+
+            <h2>Target Tracking Information</h2>
+
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Target ID</th>
+                            <th>Measured X</th>
+                            <th>Measured Y</th>
+                            <th>Kalman X</th>
+                            <th>Kalman Y</th>
+                            <th>Speed</th>
+                            <th>Distance</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="targetTable"></tbody>
+                </table>
+            </div>
+
+        </section>
+
+        <!-- KALMAN FILTER ANALYSIS -->
+        <section class="table-section">
+
+            <h2>Kalman Filter Analysis</h2>
+
+            <p>
+                Displays measured target positions and
+                Kalman-filtered position estimates.
+            </p>
+
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Target ID</th>
+                            <th>Filtered Velocity X</th>
+                            <th>Filtered Velocity Y</th>
+                            <th>Filtered Position X</th>
+                            <th>Filtered Position Y</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="kalmanTable"></tbody>
+                </table>
+            </div>
+
+        </section>
+
+        <!-- KALMAN PERFORMANCE COMPARISON -->
+        <section class="table-section">
+
+            <h2>Kalman Filter Performance Comparison</h2>
+
+            <p>
+                Compares raw measurement error with
+                Kalman-filtered estimation error.
+            </p>
+
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Target ID</th>
+                            <th>Raw Measurement Error</th>
+                            <th>Kalman Estimation Error</th>
+                            <th>Error Reduction (%)</th>
+                            <th>Comparison Count</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="noiseComparisonTable"></tbody>
+                </table>
+            </div>
+
+        </section>
+
+        <!-- PERFORMANCE CHART -->
+        <section class="chart-section">
+
+            <h2>Kalman Filter Error Comparison Chart</h2>
+
+            <p>
+                Visual comparison of raw measurement error
+                and Kalman estimation error for each target.
+            </p>
+
+            <div class="chart-container">
+                <canvas
+                    id="noiseComparisonChart"
+                    width="900"
+                    height="420">
+                </canvas>
+            </div>
+
+            <div class="chart-legend">
+
+                <div class="legend-item">
+                    <span class="legend-color raw-error"></span>
+                    Raw Measurement Error
+                </div>
+
+                <div class="legend-item">
+                    <span class="legend-color kalman-error"></span>
+                    Kalman Estimation Error
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- TRACKING ACCURACY -->
+        <section class="accuracy-section">
+
+            <h2>Tracking Accuracy Analysis</h2>
+
+            <p>
+                Displays the latest and average prediction errors
+                calculated by the C tracking engine.
+            </p>
+
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Target ID</th>
+                            <th>Latest Prediction Error</th>
+                            <th>Average Prediction Error</th>
+                            <th>Prediction Count</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="accuracyTable"></tbody>
+                </table>
+            </div>
+
+        </section>
+
+        <!-- TARGET MONITORING ALERTS -->
+        <section class="alert-section">
+
+            <h2>Target Monitoring Alerts</h2>
+
+            <div id="alertSummary">
+                <p>System monitoring is active.</p>
+            </div>
+
+            <div id="alertList"></div>
+
+        </section>
+
+        <!-- FUTURE POSITION PREDICTION -->
+        <section class="prediction-section">
+
+            <h2>Future Target Position Prediction</h2>
+
+            <div class="prediction-controls">
+
+                <label for="predictionTime">
+                    Prediction Time (seconds):
+                </label>
+
+                <input
+                    type="number"
+                    id="predictionTime"
+                    value="5"
+                    min="0"
+                    step="1">
+
+                <button onclick="predictTargets()">
+                    Predict Position
+                </button>
+
+            </div>
+
+            <div id="predictionResults">
+                Predicted positions will appear here.
+            </div>
+
+        </section>
+
+        <!-- RADAR LEGEND -->
+        <section class="legend-section">
+
+            <h2>Radar Legend</h2>
+
+            <div class="legend-item">
+                <span class="legend-dot measured"></span>
+                Measured Target Position
+            </div>
+
+            <div class="legend-item">
+                <span class="legend-dot filtered"></span>
+                Kalman-Filtered Position
+            </div>
+
+            <div class="legend-item">
+                <span class="legend-dot predicted"></span>
+                Predicted Future Position
+            </div>
+
+        </section>
+
+    </main>
+
+    <footer class="footer">
+        <p>
+            Multi-Target Radar Tracking System |
+            C Backend | Kalman Filter |
+            Measurement Noise Simulation |
+            HTML | CSS | JavaScript
+        </p>
+    </footer>
+
+</body>
+</html>

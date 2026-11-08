@@ -1,0 +1,17 @@
+
+# Compiled executable
+radar_tracker.exe
+
+# Object files
+*.o
+*.obj
+
+# Debug files
+*.exe~
+
+# Temporary files
+*.tmp
+*.log
+
+# VS Code local settings
+.vscode/
