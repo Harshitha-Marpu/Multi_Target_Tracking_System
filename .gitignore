@@ -15,3 +15,14 @@ radar_tracker.exe
 
 # VS Code local settings
 .vscode/
+
+# RadarScenes data (too large for Git; download from Zenodo)
+data/
+
+# All compiled executables
+*.exe
+
+# Generated logs and local databases
+radar_association_log*.csv
+database/*.db
+backup/**/*.db
