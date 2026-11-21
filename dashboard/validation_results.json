@@ -156,9 +156,8 @@
     }
   ],
   "notes": [
-    "Metrics are identity based. MOTA/MOTP are not computed because RadarScenes has no per-frame object positions.",
-    "Tracks are fused across the four sensors (one track can be updated by any sensor); idf1/idr/idp are the fused values, per_sensor_idf1_percent is the older per-sensor view.",
-    "Only confirmed tracks (3 or more hits) are stored and shown.",
-    "Results are for a single sequence with five labelled moving objects and should not be generalised."
+    "Scores use identity matching only. Position-accuracy scores (MOTA/MOTP) are not available because RadarScenes has no per-frame object positions.",
+    "Tracks are shared across the four car sensors, and only tracks seen three or more times are kept.",
+    "Everything comes from one recording with five labelled moving objects, so it should not be treated as a general benchmark."
   ]
 }
