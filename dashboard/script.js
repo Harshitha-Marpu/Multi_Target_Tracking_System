@@ -975,6 +975,103 @@ async function loadCTargetData() {
     }
 }
 
+// 24B. LOAD REAL-DATASET VALIDATION RESULTS
+
+function validationCard(label, value, hint) {
+    return (
+        '<div class="validation-card">' +
+        '<span class="validation-value">' + value + '</span>' +
+        '<span class="validation-label">' + label + '</span>' +
+        (hint ? '<span class="validation-hint">' + hint + '</span>' : '') +
+        '</div>'
+    );
+}
+
+async function loadValidationResults() {
+    const subtitle = document.getElementById("validationSubtitle");
+    const cards = document.getElementById("validationCards");
+    const tableBody = document.getElementById("validationTable");
+    const notes = document.getElementById("validationNotes");
+
+    if (!subtitle || !cards || !tableBody || !notes) {
+        return;
+    }
+
+    try {
+        const response = await fetch(
+            "./validation_results.json",
+            { cache: "no-store" }
+        );
+
+        if (!response.ok) {
+            throw new Error("validation_results.json not found");
+        }
+
+        const r = await response.json();
+        const fmt = n => Number(n).toLocaleString("en-US");
+
+        subtitle.textContent =
+            r.dataset.name + " " + r.dataset.sequence + ": " +
+            fmt(r.dataset.total_detections) + " radar detections, " +
+            fmt(r.pipeline.frames) + " frames, " +
+            r.dataset.reference_objects + " labelled moving objects.";
+
+        cards.innerHTML =
+            validationCard(
+                "Tracks created",
+                fmt(r.pipeline.tracks_created),
+                "stored in SQLite"
+            ) +
+            validationCard(
+                "Detections treated as noise",
+                r.pipeline.noise_percent + "%",
+                "eps " + r.pipeline.cluster_epsilon_m + " m, min " +
+                r.pipeline.cluster_min_points + " points"
+            ) +
+            validationCard(
+                "Labelled detections tracked",
+                r.evaluation.coverage_percent + "%",
+                fmt(r.evaluation.gt_in_tracks) + " of " +
+                fmt(r.dataset.labelled_dynamic_detections)
+            ) +
+            validationCard(
+                "Identity F1 (IDF1)",
+                r.evaluation.idf1_percent + "%",
+                "IDR " + r.evaluation.idr_percent + "%, IDP " +
+                r.evaluation.idp_percent + "%"
+            ) +
+            validationCard(
+                "Track purity",
+                r.evaluation.weighted_purity_percent + "%",
+                r.evaluation.mixed_tracks + " tracks mix two objects"
+            ) +
+            validationCard(
+                "Identity switches",
+                fmt(r.evaluation.identity_switches),
+                "continuity " + r.evaluation.continuity_percent + "%"
+            );
+
+        tableBody.innerHTML = r.per_object.map(o =>
+            "<tr>" +
+            "<td>" + o.sensor + "</td>" +
+            "<td>" + o.reference + "</td>" +
+            "<td>" + fmt(o.gt_detections) + "</td>" +
+            "<td>" + fmt(o.logged) + "</td>" +
+            "<td>" + o.distinct_tracks + "</td>" +
+            "<td>" + o.main_track_share + "%</td>" +
+            "<td>" + o.id_switches + "</td>" +
+            "</tr>"
+        ).join("");
+
+        notes.innerHTML = r.notes.map(n => "<li>" + n + "</li>").join("");
+
+    } catch (error) {
+        subtitle.textContent =
+            "Validation results are not available for this build.";
+        console.error("Validation results error:", error);
+    }
+}
+
 // 25. INITIALIZE DASHBOARD
 
 updateFilterOptions();
@@ -982,6 +1079,7 @@ updateDashboard();
 animateRadar();
 
 loadCTargetData();
+loadValidationResults();
 
 // 26. AUTOMATIC JSON SYNCHRONIZATION
 

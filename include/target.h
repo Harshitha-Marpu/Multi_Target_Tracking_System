@@ -2,50 +2,56 @@
 #ifndef TARGET_H
 #define TARGET_H
 
-#define MAX_TARGETS 100
+#define MAX_TARGETS 10000
 #define MAX_HISTORY 100
 
-/* Target position history */
+#define MAX_UUID_LENGTH 40
+#define MAX_REFERENCE_ID_LENGTH 40
+
 typedef struct {
     double x;
     double y;
     double timestamp;
 } TrackPoint;
 
-/* Kalman filter state */
 typedef struct {
-    double state[4];       // x, y, vx, vy
+    double state[4];
     double covariance[4][4];
     int initialized;
 } KalmanState;
 
-/* Complete target information */
 typedef struct {
-
     int id;
 
-    // Measured position
+    int sensor_id;
+    double range;
+    double azimuth;
+    double rcs;
+    double radial_velocity;
+
+    char uuid[MAX_UUID_LENGTH];
+    char reference_track_id[MAX_REFERENCE_ID_LENGTH];
+    int label_id;
+
     double x;
     double y;
     double timestamp;
 
-    // Filtered velocity and speed
     double vx;
     double vy;
     double speed;
 
     int active;
+    int missed_frames;
+    int detection_count;
 
-    // Prediction error information
     double prediction_error;
     double total_prediction_error;
     int prediction_count;
     int has_prediction_error;
 
-    // Kalman filter
     KalmanState kalman;
 
-    // Measurement noise experiment results
     double average_raw_measurement_error;
     double average_kalman_estimation_error;
     double error_reduction_percent;
@@ -55,7 +61,6 @@ typedef struct {
 
     int noise_comparison_count;
 
-    // Target history
     TrackPoint history[MAX_HISTORY];
     int history_count;
 
