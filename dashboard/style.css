@@ -347,3 +347,70 @@ footer {
     height: auto;
     box-sizing: border-box;
 }
+/* =====================================
+   REAL DATASET VALIDATION SECTION
+===================================== */
+.validation-section {
+    background: #111c29;
+    border: 1px solid #263b50;
+    border-radius: 14px;
+    padding: 25px;
+    margin-bottom: 25px;
+}
+
+.validation-section h2 {
+    color: #35e0ae;
+    margin-bottom: 8px;
+}
+
+.validation-subtitle {
+    color: #a9bacb;
+    margin-bottom: 20px;
+}
+
+.validation-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.validation-card {
+    background: #172a3c;
+    border: 1px solid #263b50;
+    border-radius: 10px;
+    padding: 18px 14px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.validation-value {
+    color: #35e0ae;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.validation-label {
+    color: #ffffff;
+    font-size: 14px;
+}
+
+.validation-hint {
+    color: #a9bacb;
+    font-size: 12px;
+}
+
+.validation-heading {
+    color: #ffffff;
+    margin-bottom: 12px;
+}
+
+.validation-notes {
+    color: #a9bacb;
+    margin-top: 18px;
+    padding-left: 20px;
+    font-size: 14px;
+    line-height: 1.6;
+}

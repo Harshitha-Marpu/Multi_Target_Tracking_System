@@ -36,6 +36,42 @@
 
         </section>
 
+        <!-- REAL DATASET VALIDATION -->
+        <section class="validation-section" id="validationSection">
+
+            <h2>RadarScenes Validation Results</h2>
+
+            <p class="validation-subtitle" id="validationSubtitle">
+                Loading validation results...
+            </p>
+
+            <div class="validation-grid" id="validationCards"></div>
+
+            <h3 class="validation-heading">
+                Reference Objects (per radar sensor)
+            </h3>
+
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Sensor</th>
+                            <th>Reference</th>
+                            <th>Labelled Detections</th>
+                            <th>In Tracks</th>
+                            <th>Tracks Used</th>
+                            <th>Main Track Share</th>
+                            <th>ID Switches</th>
+                        </tr>
+                    </thead>
+                    <tbody id="validationTable"></tbody>
+                </table>
+            </div>
+
+            <ul class="validation-notes" id="validationNotes"></ul>
+
+        </section>
+
         <!-- RADAR MONITORING -->
         <section class="radar-section">
 
